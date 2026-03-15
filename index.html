@@ -16,29 +16,29 @@
 
     <main>
         <!-- Scenario Display -->
-        <div class="scenario-container">
-            <div id="scenario-display" class="scenario-display">
-                <div id="scenario-symbol" class="scenario-symbol">☀️ 🧑‍🤝‍🧑</div>
+        <div class="scenario-container" role="region" aria-label="Generated scenario">
+            <div id="scenario-display" class="scenario-display" aria-live="polite">
+                <div id="scenario-symbol" class="scenario-symbol" aria-hidden="true">☀️ 🧑‍🤝‍🧑</div>
                 <div class="scenario-details">
                     <div class="scenario-detail">
-                        <span class="label">Date:</span>
-                        <span id="scenario-date" class="value">-</span>
+                        <span class="label" id="label-date">Date:</span>
+                        <span id="scenario-date" class="value" aria-labelledby="label-date">-</span>
                     </div>
                     <div class="scenario-detail">
-                        <span class="label">Weather:</span>
-                        <span id="scenario-weather" class="value">-</span>
+                        <span class="label" id="label-weather">Weather:</span>
+                        <span id="scenario-weather" class="value" aria-labelledby="label-weather">-</span>
                     </div>
                     <div class="scenario-detail">
-                        <span class="label">Route:</span>
-                        <span id="scenario-route" class="value">-</span>
+                        <span class="label" id="label-route">Route:</span>
+                        <span id="scenario-route" class="value" aria-labelledby="label-route">-</span>
                     </div>
                     <div class="scenario-detail">
-                        <span class="label">Mission:</span>
-                        <span id="scenario-mission" class="value">-</span>
+                        <span class="label" id="label-mission">Mission:</span>
+                        <span id="scenario-mission" class="value" aria-labelledby="label-mission">-</span>
                     </div>
                     <div class="scenario-detail">
-                        <span class="label">Time:</span>
-                        <span id="scenario-time" class="value">-</span>
+                        <span class="label" id="label-time">Time:</span>
+                        <span id="scenario-time" class="value" aria-labelledby="label-time">-</span>
                     </div>
                 </div>
             </div>
@@ -47,10 +47,10 @@
         <!-- Controls -->
         <div class="controls">
             <div class="control-row">
-                <button id="generate-btn" class="btn btn-primary">
+                <button id="generate-btn" class="btn btn-primary" aria-label="Generate new random scenario">
                     🎲 New Scenario
                 </button>
-                <button id="copy-btn" class="btn btn-secondary">
+                <button id="copy-btn" class="btn btn-secondary" aria-label="Copy scenario to clipboard">
                     📋 Copy
                 </button>
             </div>
