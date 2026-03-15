@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TSW5 Random Weather Scenario Generator - Generate random scenarios for Train Sim World 5">
+    <meta name="theme-color" content="#0d1117">
+    <title>TSW5 Random Weather Scenario</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🚂 TSW5 Random Weather Scenario</h1>
+        <p>Generiere zufällige Szenarien für Train Sim World 5</p>
+    </header>
+
+    <main>
+        <!-- Scenario Display -->
+        <div class="scenario-container">
+            <div id="scenario-display" class="scenario-display">
+                <div id="scenario-symbol" class="scenario-symbol">☀️ 🧑‍🤝‍🧑</div>
+                <div class="scenario-details">
+                    <div class="scenario-detail">
+                        <span class="label">Datum:</span>
+                        <span id="scenario-date" class="value">-</span>
+                    </div>
+                    <div class="scenario-detail">
+                        <span class="label">Wetter:</span>
+                        <span id="scenario-weather" class="value">-</span>
+                    </div>
+                    <div class="scenario-detail">
+                        <span class="label">Strecke:</span>
+                        <span id="scenario-route" class="value">-</span>
+                    </div>
+                    <div class="scenario-detail">
+                        <span class="label">Aufgabe:</span>
+                        <span id="scenario-mission" class="value">-</span>
+                    </div>
+                    <div class="scenario-detail">
+                        <span class="label">Zeit:</span>
+                        <span id="scenario-time" class="value">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-row">
+                <button id="generate-btn" class="btn btn-primary">
+                    🎲 Neues Szenario
+                </button>
+                <button id="copy-btn" class="btn btn-secondary">
+                    📋 Kopieren
+                </button>
+            </div>
+            
+            <div class="control-row">
+                <div class="date-control">
+                    <label for="date-input">📅 Datum:</label>
+                    <input type="date" id="date-input">
+                </div>
+                <button id="manage-routes-btn" class="btn btn-secondary">
+                    🛤️ Routen verwalten
+                </button>
+            </div>
+        </div>
+
+        <!-- Routes Info -->
+        <div id="routes-info" class="routes-info">
+            Lade Routen...
+        </div>
+    </main>
+
+    <!-- Route Management Modal -->
+    <div id="route-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛤️ Routen verwalten</h2>
+                <button id="close-modal-btn" class="btn-icon" title="Schließen">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="add-route-section">
+                    <input type="text" id="new-route-input" placeholder="Neue Route hinzufügen...">
+                    <button id="add-route-btn" class="btn btn-primary">Hinzufügen</button>
+                </div>
+                
+                <div id="route-list" class="route-list">
+                    <!-- Routes will be populated here -->
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="reset-routes-btn" class="btn btn-secondary">🔄 Standard</button>
+                <button id="clear-routes-btn" class="btn btn-secondary" style="color: var(--accent-danger);">🗑️ Alle löschen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy Status -->
+    <div id="copy-status" class="copy-status"></div>
+
+    <footer>
+        <p>
+            <a href="https://github.com/MCBlatt/TSW5-Random-Weather-Scenario" target="_blank" rel="noopener">
+                GitHub: MCBlatt/TSW5-Random-Weather-Scenario
+            </a>
+        </p>
+        <p>Version 1.0.0 • Made with ❤️ for TSW5 fans</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/weather.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/scenario.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
