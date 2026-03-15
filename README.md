@@ -1,34 +1,41 @@
 # TSW5 Random Weather Scenario Generator
 
-Eine Web-App zur Generierung zufälliger Szenarien für Train Sim World 5.
+> **EN** | A web app for generating random scenarios for Train Sim World 5  
+> **DE** | Eine Web-App zur Generierung zufälliger Szenarien für Train Sim World 5
 
-## 🌟 Features
+🌐 **Live:** https://aloyvipa.github.io/tsw5-random-web/
 
-- **Wetter-Generierung**: Realistische saisonale Wetterwahrscheinlichkeiten basierend auf dem ausgewählten Monat
-- **Routen-Auswahl**: Voreingestellte Listen für TSW5 DLCs (Deutschland, UK, USA)
-- **Szenario-Generator**: Kombiniert Wetter, Route, Uhrzeit und Zugtyp zufällig
-- **Teilen-Funktion**: Kopiere das generierte Szenario in die Zwischenablage
-- **Routen-Verwaltung**: Füge eigene Routen hinzu oder verwalte die vorhandenen
+---
 
-## 🚀 Verwendung
+## ✨ Features | Funktionen
 
-### Online
-Die App ist auf GitHub Pages verfügbar:
-https://aloyvipa.github.io/tsw5-random-web/
+| EN | DE |
+|----|-----|
+| **Weather Generation** — Realistic seasonal probabilities based on selected month | **Wetter-Generierung** — Realistische saisonale Wahrscheinlichkeiten basierend auf dem Monat |
+| **Route Selection** — Pre-configured lists for TSW5 DLCs (Germany, UK, USA) | **Routen-Auswahl** — Voreingestellte Listen für TSW5 DLCs (Deutschland, UK, USA) |
+| **Scenario Generator** — Randomly combines weather, route, time and train type | **Szenario-Generator** — Kombiniert Wetter, Route, Uhrzeit und Zugtyp zufällig |
+| **Share Function** — Copy generated scenario to clipboard | **Teilen-Funktion** — Kopiere das Szenario in die Zwischenablage |
+| **Route Management** — Add your own routes or manage existing ones | **Routen-Verwaltung** — Füge eigene Routen hinzu oder verwalte bestehende |
 
-### Lokal
-1. Repository klonen oder herunterladen
-2. `index.html` in einem Browser öffnen
-3. Fertig! Kein Server nötig.
+---
 
-## ⌨️ Tastenkürzel
+## 🚀 Usage | Verwendung
 
-- `Leertaste` - Neues Szenario generieren
-- `Strg+C` - Aktuelles Szenario kopieren
+Simply open the web app in your browser — no installation needed!  
+Öffne einfach die Web-App im Browser — keine Installation nötig!
 
-## 🛤️ Enthaltene Routen
+### ⌨️ Shortcuts | Tastenkürzel
 
-### Deutschland
+- `Space` / `Leertaste` — Generate new scenario / Neues Szenario
+- `Ctrl+C` / `Strg+C` — Copy scenario / Szenario kopieren
+
+---
+
+## 🛤️ Included Routes | Enthaltene Routen
+
+<details>
+<summary>🇩🇪 Germany / Deutschland (24 routes)</summary>
+
 - Schnellfahrstrecke Kassel - Würzburg
 - Bahnstrecke Bremen - Oldenburg
 - Pfälzische Ludwigsbahn
@@ -53,8 +60,11 @@ https://aloyvipa.github.io/tsw5-random-web/
 - Schnellfahrstrecke Karlsruhe - Basel
 - Bahnstrecke Kiel - Lübeck
 - Bahnstrecke Würzburg - Stuttgart
+</details>
 
-### Großbritannien
+<details>
+<summary>🇬🇧 UK (20 routes)</summary>
+
 - West Coast Main Line South
 - Midland Main Line
 - East Coast Main Line
@@ -75,8 +85,11 @@ https://aloyvipa.github.io/tsw5-random-web/
 - Bakerloo Line
 - London Commuter
 - Scotland Express
+</details>
 
-### USA
+<details>
+<summary>🇺🇸 USA (8 routes)</summary>
+
 - NEC: Boston - Providence
 - Long Island Rail Road
 - Cane Creek
@@ -85,55 +98,54 @@ https://aloyvipa.github.io/tsw5-random-web/
 - Cajon Pass
 - San Bernardino Line
 - Peninsula Corridor
+</details>
 
-## 🌦️ Wetter-System
+---
 
+## 🌦️ Weather System | Wetter-System
+
+The app uses realistic probabilities for each month:  
 Die App verwendet realistische Wahrscheinlichkeiten für jeden Monat:
 
-- **Winter** (Dez-Feb): Mehr Schnee und Nebel
-- **Frühling** (Mär-Mai): Ausgewogen, weniger Schnee
-- **Sommer** (Jun-Aug): Mehr Sonne und Gewitter
-- **Herbst** (Sep-Nov): Mehr Wolken und Nebel
+| Season | EN | DE |
+|--------|----|-----|
+| Winter (Dec-Feb) | More snow and fog | Mehr Schnee und Nebel |
+| Spring (Mar-May) | Balanced, less snow | Ausgewogen, weniger Schnee |
+| Summer (Jun-Aug) | More sun and thunderstorms | Mehr Sonne und Gewitter |
+| Autumn (Sep-Nov) | More clouds and fog | Mehr Wolken und Nebel |
 
-## 🛠️ Technologien
+---
 
-- Reines HTML5, CSS3 und Vanilla JavaScript
-- Keine externen Abhängigkeiten
-- LocalStorage für Routen-Persistenz
-- Responsive Design für Mobile
+## 🛠️ Tech Stack | Technologien
 
-## 📁 Projektstruktur
+- Pure HTML5, CSS3 and Vanilla JavaScript
+- No external dependencies
+- LocalStorage for route persistence
+- Responsive design for mobile
+- GitHub Pages hosting
 
-```
-ts5-web/
-├── index.html          # Hauptseite
-├── css/
-│   └── style.css       # Styling (Dark Mode)
-├── js/
-│   ├── weather.js      # Wetter-Logik
-│   ├── routes.js       # Routen-Daten
-│   ├── scenario.js     # Szenario-Generator
-│   ├── app.js          # Haupt-App-Logik
-│   └── weather-config.json  # Wetter-Wahrscheinlichkeiten
-└── README.md
-```
+---
 
-## 📝 Lizenz
-
-MIT License - siehe [LICENSE](LICENSE)
-
-## 🙏 Credits
-
-Basierend auf der originalen Python/Tkinter App von [MCBlatt](https://github.com/MCBlatt).
-
-## 👤 Über das Projekt
+## 👤 About This Project | Über das Projekt
 
 Maintained by the AloyVipa project with help from automation.  
 Repository supervision by [@MCBlatt](https://github.com/MCBlatt).
 
+---
+
 ## 💬 Feedback
 
-Hast du einen Bug gefunden oder eine Idee für eine neue Funktion?
+| | Link |
+|---|------|
+| 🐛 **Bugs** | [View / Report](https://github.com/AloyVipa/tsw5-random-web/issues?q=is%3Aissue+label%3Abug) |
+| 💡 **Features** | [View / Suggest](https://github.com/AloyVipa/tsw5-random-web/issues?q=is%3Aissue+label%3Afeature) |
 
-- 🐛 [Bugs anzeigen / melden](https://github.com/AloyVipa/tsw5-random-web/issues?q=is%3Aissue+label%3Abug)
-- 💡 [Ideen anzeigen / vorschlagen](https://github.com/AloyVipa/tsw5-random-web/issues?q=is%3Aissue+label%3Afeature)
+---
+
+## 📝 License
+
+MIT License — see [LICENSE](LICENSE) file.
+
+## 🙏 Credits
+
+Based on the original Python/Tkinter app by [MCBlatt](https://github.com/MCBlatt).
