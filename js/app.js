@@ -163,18 +163,41 @@ function applyTranslations() {
     document.getElementById('copy-btn').textContent = langService.get('copy');
     document.getElementById('manage-routes-btn').textContent = langService.get('manageRoutes');
     
+    // Update scenario labels
+    const labels = document.querySelectorAll('.scenario-detail .label');
+    labels.forEach(label => {
+        const text = label.textContent.toLowerCase().replace(':', '');
+        if (text.includes('date') || text.includes('datum')) {
+            label.textContent = langService.get('dateLabel');
+        } else if (text.includes('weather') || text.includes('wetter')) {
+            label.textContent = langService.get('weatherLabel');
+        } else if (text.includes('route') || text.includes('strecke')) {
+            label.textContent = langService.get('routeLabel');
+        } else if (text.includes('mission') || text.includes('aufgabe')) {
+            label.textContent = langService.get('missionLabel');
+        } else if (text.includes('time') || text.includes('zeit')) {
+            label.textContent = langService.get('timeLabel');
+        }
+    });
+    
     // Update modal
     document.querySelector('.modal-header h2').textContent = langService.get('routeManagement');
     document.getElementById('new-route-input').placeholder = langService.get('addRoutePlaceholder');
-    document.getElementById('route-search').placeholder = langService.get('searchRoutes') || '🔍 Search routes...';
+    document.getElementById('route-search').placeholder = langService.get('searchRoutes');
     document.getElementById('add-route-btn').textContent = langService.get('addRoute');
     document.getElementById('reset-routes-btn').textContent = langService.get('resetRoutes');
     document.getElementById('clear-routes-btn').textContent = langService.get('clearRoutes');
     
     // Update section titles
     const sectionTitles = document.querySelectorAll('.route-section h3');
-    if (sectionTitles[0]) sectionTitles[0].textContent = langService.get('myRoutes') || 'My Routes';
-    if (sectionTitles[1]) sectionTitles[1].textContent = langService.get('availableRoutes') || 'Available Routes';
+    if (sectionTitles[0]) sectionTitles[0].textContent = langService.get('myRoutes');
+    if (sectionTitles[1]) sectionTitles[1].textContent = langService.get('availableRoutes');
+    
+    // Update tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        const cat = btn.dataset.category;
+        btn.textContent = langService.get(cat);
+    });
     
     // Update footer
     document.querySelector('footer p:last-child').textContent = langService.get('version');
@@ -198,9 +221,10 @@ function displayScenario(scenario) {
     display.classList.add('updating');
 
     setTimeout(() => {
+        const translatedWeather = langService.translateWeather(scenario.weather.name);
         scenarioDisplay.symbol.textContent = `${scenario.weather.emoji} ${scenario.missionEmoji}`;
         scenarioDisplay.date.textContent = `📅 ${scenario.formattedDate}`;
-        scenarioDisplay.weather.textContent = `🌦️ ${scenario.weather.name}`;
+        scenarioDisplay.weather.textContent = `🌦️ ${translatedWeather}`;
         scenarioDisplay.route.textContent = `🛤️ ${scenario.route}`;
         scenarioDisplay.mission.textContent = `🚆 ${scenario.missionType}`;
         scenarioDisplay.time.textContent = `🕐 ${scenario.timeOfDay}`;
@@ -309,7 +333,8 @@ function renderAvailableRoutes(category, searchTerm = '') {
     availableRoutesList.innerHTML = '';
 
     if (filteredRoutes.length === 0) {
-        availableRoutesList.innerHTML = `<div class="empty-list">${searchTerm ? 'No matches' : 'All routes added'}</div>`;
+        const msg = searchTerm ? langService.get('noMatches') : langService.get('allRoutesAdded');
+        availableRoutesList.innerHTML = `<div class="empty-list">${msg}</div>`;
         return;
     }
 

@@ -2,6 +2,28 @@
  * Language Service - Multi-language support
  */
 
+// Weather translations
+const WEATHER_TRANSLATIONS = {
+    en: {
+        "Klar": "Clear",
+        "Neblig": "Foggy",
+        "Leicht Bewölkt": "Partly Cloudy",
+        "Stark Bewölkt": "Overcast",
+        "Gewittersturm": "Thunderstorm",
+        "Leichter Schneefall": "Light Snow",
+        "Schneesturm": "Blizzard"
+    },
+    de: {
+        "Klar": "Klar",
+        "Neblig": "Neblig",
+        "Leicht Bewölkt": "Leicht Bewölkt",
+        "Stark Bewölkt": "Stark Bewölkt",
+        "Gewittersturm": "Gewittersturm",
+        "Leichter Schneefall": "Leichter Schneefall",
+        "Schneesturm": "Schneesturm"
+    }
+};
+
 const translations = {
     en: {
         title: "🚂 TSW5 Random Weather Scenario",
@@ -33,13 +55,24 @@ const translations = {
         enterName: "❌ Please enter a name",
         filterAll: "All Regions",
         filterGermany: "🇩🇪 Germany",
-        filterUK: "🇬🇧 United Kingdom",
+        filterUK: "🇬🇧 UK",
         filterUSA: "🇺🇸 USA",
         footerGithub: "GitHub: AloyVipa/tsw5-random-web",
         version: "Version 1.0.0 • Made with ❤️ for TSW5 fans",
         myRoutes: "My Routes",
         availableRoutes: "Available Routes",
-        searchRoutes: "🔍 Search routes..."
+        searchRoutes: "🔍 Search routes...",
+        dateLabel: "Date:",
+        weatherLabel: "Weather:",
+        routeLabel: "Route:",
+        missionLabel: "Mission:",
+        timeLabel: "Time:",
+        noMatches: "No matches",
+        allRoutesAdded: "All routes added",
+        germany: "Germany",
+        uk: "UK",
+        usa: "USA",
+        other: "Other"
     },
     de: {
         title: "🚂 TSW5 Random Weather Scenario",
@@ -71,13 +104,24 @@ const translations = {
         enterName: "❌ Bitte Name eingeben",
         filterAll: "Alle Regionen",
         filterGermany: "🇩🇪 Deutschland",
-        filterUK: "🇬🇧 Großbritannien",
+        filterUK: "🇬🇧 UK",
         filterUSA: "🇺🇸 USA",
         footerGithub: "GitHub: AloyVipa/tsw5-random-web",
         version: "Version 1.0.0 • Made with ❤️ for TSW5 fans",
         myRoutes: "Meine Routen",
         availableRoutes: "Verfügbare Routen",
-        searchRoutes: "🔍 Routen suchen..."
+        searchRoutes: "🔍 Routen suchen...",
+        dateLabel: "Datum:",
+        weatherLabel: "Wetter:",
+        routeLabel: "Strecke:",
+        missionLabel: "Aufgabe:",
+        timeLabel: "Zeit:",
+        noMatches: "Keine Treffer",
+        allRoutesAdded: "Alle Routen hinzugefügt",
+        germany: "Deutschland",
+        uk: "UK",
+        usa: "USA",
+        other: "Sonstige"
     }
 };
 
@@ -115,6 +159,10 @@ class LanguageService {
 
     get(key) {
         return translations[this.currentLang][key] || translations['en'][key] || key;
+    }
+
+    translateWeather(weatherName) {
+        return WEATHER_TRANSLATIONS[this.currentLang][weatherName] || weatherName;
     }
 
     getCurrentLang() {

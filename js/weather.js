@@ -4,7 +4,7 @@
 
 const WEATHER_SYMBOLS = {
     "Klar": "☀️",
-    "Neblig": "🌫️",
+    "Neblig": "🌁",
     "Leicht Bewölkt": "⛅",
     "Stark Bewölkt": "☁️",
     "Gewittersturm": "⛈️",
