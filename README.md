@@ -130,5 +130,9 @@ Basierend auf der originalen Python/Tkinter App von [MCBlatt](https://github.com
 
 Hast du einen Bug gefunden oder eine Idee für eine neue Funktion?
 
+**Vor dem Erstellen eines neuen Issues:**
+🔍 [Bestehende Issues durchsuchen](https://github.com/AloyVipa/tsw5-random-web/issues)
+
+**Neues Issue erstellen:**
 - 🐛 [Bug melden](https://github.com/AloyVipa/tsw5-random-web/issues/new?template=bug_report.md)
 - 💡 [Idee vorschlagen](https://github.com/AloyVipa/tsw5-random-web/issues/new?template=feature_request.md)
