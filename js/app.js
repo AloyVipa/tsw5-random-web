@@ -10,6 +10,7 @@ let scenarioService = null;
 // Current state
 let currentScenario = null;
 let selectedDate = new Date();
+let selectedRegion = 'all';
 
 // DOM Elements
 let scenarioDisplay = null;
@@ -18,6 +19,7 @@ let routesInfo = null;
 let copyStatus = null;
 let routeModal = null;
 let routeList = null;
+let regionFilter = null;
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
@@ -36,6 +38,9 @@ async function initApp() {
 
     // Set up event listeners
     setupEventListeners();
+
+    // Apply translations
+    applyTranslations();
 
     // Set today's date
     dateInput.valueAsDate = selectedDate;
@@ -61,6 +66,7 @@ function cacheElements() {
     copyStatus = document.getElementById('copy-status');
     routeModal = document.getElementById('route-modal');
     routeList = document.getElementById('route-list');
+    regionFilter = document.getElementById('region-filter');
 }
 
 function setupEventListeners() {
@@ -76,6 +82,13 @@ function setupEventListeners() {
             selectedDate = new Date(e.target.value);
             generateScenario();
         }
+    });
+
+    // Region filter change
+    regionFilter.addEventListener('change', (e) => {
+        selectedRegion = e.target.value;
+        updateRoutesInfo();
+        generateScenario();
     });
 
     // Route management
@@ -101,7 +114,7 @@ function setupEventListeners() {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        if (e.key === ' ' && e.target.tagName !== 'INPUT') {
+        if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
             e.preventDefault();
             generateScenario();
         }
@@ -112,8 +125,37 @@ function setupEventListeners() {
     });
 }
 
+function applyTranslations() {
+    // Update static text elements
+    document.getElementById('page-subtitle').textContent = langService.get('subtitle');
+    document.getElementById('generate-btn').textContent = langService.get('newScenario');
+    document.getElementById('copy-btn').textContent = langService.get('copy');
+    document.getElementById('manage-routes-btn').textContent = langService.get('manageRoutes');
+    
+    // Update modal
+    document.querySelector('.modal-header h2').textContent = langService.get('routeManagement');
+    document.getElementById('new-route-input').placeholder = langService.get('addRoutePlaceholder');
+    document.getElementById('add-route-btn').textContent = langService.get('addRoute');
+    document.getElementById('reset-routes-btn').textContent = langService.get('resetRoutes');
+    document.getElementById('clear-routes-btn').textContent = langService.get('clearRoutes');
+    
+    // Update labels
+    document.querySelector('label[for="date-input"]').textContent = langService.get('date');
+    document.querySelector('label[for="region-filter"]').textContent = '🌍 Region:';
+    
+    // Update footer
+    document.querySelector('footer p:last-child').textContent = langService.get('version');
+    
+    // Update filter options
+    const filterOptions = regionFilter.querySelectorAll('option');
+    filterOptions[0].textContent = langService.get('filterAll');
+    filterOptions[1].textContent = langService.get('filterGermany');
+    filterOptions[2].textContent = langService.get('filterUK');
+    filterOptions[3].textContent = langService.get('filterUSA');
+}
+
 function generateScenario() {
-    currentScenario = scenarioService.generateScenario(selectedDate);
+    currentScenario = scenarioService.generateScenario(selectedDate, selectedRegion);
     displayScenario(currentScenario);
 }
 
@@ -141,7 +183,7 @@ async function copyScenario() {
 
     try {
         await navigator.clipboard.writeText(text);
-        showCopyStatus('✅ Kopiert!', 'success');
+        showCopyStatus(langService.get('copied'), 'success');
     } catch (err) {
         // Fallback for older browsers
         const textarea = document.createElement('textarea');
@@ -153,9 +195,9 @@ async function copyScenario() {
 
         try {
             document.execCommand('copy');
-            showCopyStatus('✅ Kopiert!', 'success');
+            showCopyStatus(langService.get('copied'), 'success');
         } catch (e) {
-            showCopyStatus('❌ Fehler beim Kopieren', 'error');
+            showCopyStatus(langService.get('copyError'), 'error');
         }
 
         document.body.removeChild(textarea);
@@ -173,8 +215,8 @@ function showCopyStatus(message, type) {
 }
 
 function updateRoutesInfo() {
-    const count = routesService.getRouteCount();
-    routesInfo.textContent = `${count} Route${count !== 1 ? 'n' : ''} verfügbar`;
+    const count = routesService.getRoutesByCategory(selectedRegion).length;
+    routesInfo.textContent = `${count} ${langService.get('routesAvailable')}`;
 }
 
 // Route Management Modal
@@ -194,7 +236,7 @@ function renderRouteList() {
     routeList.innerHTML = '';
 
     if (routes.length === 0) {
-        routeList.innerHTML = '<div class="empty-list">Keine Routen vorhanden</div>';
+        routeList.innerHTML = `<div class="empty-list">${langService.get('noRoutes')}</div>`;
         return;
     }
 
@@ -203,7 +245,7 @@ function renderRouteList() {
         item.className = 'route-item';
         item.innerHTML = `
             <span class="route-name">${escapeHtml(route)}</span>
-            <button class="btn-icon delete-route-btn" data-route="${escapeHtml(route)}" title="Entfernen">
+            <button class="btn-icon delete-route-btn" data-route="${escapeHtml(route)}" title="Remove">
                 🗑️
             </button>
         `;
@@ -224,7 +266,7 @@ function addNewRoute() {
     const name = input.value.trim();
 
     if (!name) {
-        showCopyStatus('❌ Bitte Name eingeben', 'error');
+        showCopyStatus(langService.get('enterName'), 'error');
         return;
     }
 
@@ -232,9 +274,9 @@ function addNewRoute() {
         input.value = '';
         renderRouteList();
         updateRoutesInfo();
-        showCopyStatus('✅ Route hinzugefügt', 'success');
+        showCopyStatus(langService.get('routeAdded'), 'success');
     } else {
-        showCopyStatus('❌ Route existiert bereits', 'error');
+        showCopyStatus(langService.get('routeExists'), 'error');
     }
 }
 
@@ -242,25 +284,25 @@ function deleteRoute(route) {
     if (routesService.removeRoute(route)) {
         renderRouteList();
         updateRoutesInfo();
-        showCopyStatus('✅ Route entfernt', 'success');
+        showCopyStatus(langService.get('routeRemoved'), 'success');
     }
 }
 
 function resetRoutes() {
-    if (confirm('Alle Routen auf Standard zurücksetzen?')) {
+    if (confirm(langService.get('confirmReset'))) {
         routesService.resetToDefault();
         renderRouteList();
         updateRoutesInfo();
-        showCopyStatus('✅ Routen zurückgesetzt', 'success');
+        showCopyStatus(langService.get('routesReset'), 'success');
     }
 }
 
 function clearAllRoutes() {
-    if (confirm('Wirklich ALLE Routen löschen?')) {
+    if (confirm(langService.get('confirmClear'))) {
         routesService.clearAll();
         renderRouteList();
         updateRoutesInfo();
-        showCopyStatus('✅ Alle Routen gelöscht', 'success');
+        showCopyStatus(langService.get('routesCleared'), 'success');
     }
 }
 

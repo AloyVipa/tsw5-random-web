@@ -2,36 +2,53 @@
  * Scenario Service - Generates complete TSW5 scenarios
  */
 
-const MISSION_TYPES = ["Personenverkehr", "Güterverkehr"];
+const MISSION_TYPES = {
+    en: ["Passenger Service", "Freight Service"],
+    de: ["Personenverkehr", "Güterverkehr"]
+};
 
 const MISSION_SYMBOLS = {
+    "Passenger Service": "🧑‍🤝‍🧑",
+    "Freight Service": "📦",
     "Personenverkehr": "🧑‍🤝‍🧑",
     "Güterverkehr": "📦"
 };
 
-const TIME_PERIODS = [
-    { name: "Früh (05:00 - 09:00)", weight: 20 },
-    { name: "Vormittag (09:00 - 12:00)", weight: 15 },
-    { name: "Mittag (12:00 - 14:00)", weight: 10 },
-    { name: "Nachmittag (14:00 - 17:00)", weight: 20 },
-    { name: "Abend (17:00 - 20:00)", weight: 20 },
-    { name: "Nacht (20:00 - 05:00)", weight: 15 }
-];
+const TIME_PERIODS = {
+    en: [
+        { name: "Early Morning (05:00 - 09:00)", weight: 20 },
+        { name: "Morning (09:00 - 12:00)", weight: 15 },
+        { name: "Midday (12:00 - 14:00)", weight: 10 },
+        { name: "Afternoon (14:00 - 17:00)", weight: 20 },
+        { name: "Evening (17:00 - 20:00)", weight: 20 },
+        { name: "Night (20:00 - 05:00)", weight: 15 }
+    ],
+    de: [
+        { name: "Früh (05:00 - 09:00)", weight: 20 },
+        { name: "Vormittag (09:00 - 12:00)", weight: 15 },
+        { name: "Mittag (12:00 - 14:00)", weight: 10 },
+        { name: "Nachmittag (14:00 - 17:00)", weight: 20 },
+        { name: "Abend (17:00 - 20:00)", weight: 20 },
+        { name: "Nacht (20:00 - 05:00)", weight: 15 }
+    ]
+};
 
 class ScenarioService {
     constructor(weatherService, routesService) {
         this.weatherService = weatherService;
         this.routesService = routesService;
+        this.lang = langService ? langService.getCurrentLang() : 'en';
     }
 
     /**
      * Generate a complete scenario
      * @param {Date} date - Optional date (defaults to today)
+     * @param {string} region - Region filter ('all', 'germany', 'uk', 'usa')
      * @returns {Object} - Complete scenario object
      */
-    generateScenario(date = new Date()) {
+    generateScenario(date = new Date(), region = 'all') {
         const weather = this.weatherService.generateWeather(date);
-        const route = this.routesService.getRandomRoute();
+        const route = this.getRandomRoute(region);
         const missionType = this.getRandomMissionType();
         const timeOfDay = this.getRandomTimeOfDay();
 
@@ -46,26 +63,35 @@ class ScenarioService {
         };
     }
 
+    getRandomRoute(region) {
+        const routes = this.routesService.getRoutesByCategory(region);
+        if (routes.length === 0) return "N/A";
+        return routes[Math.floor(Math.random() * routes.length)];
+    }
+
     getRandomMissionType() {
-        return MISSION_TYPES[Math.floor(Math.random() * MISSION_TYPES.length)];
+        const types = MISSION_TYPES[this.lang] || MISSION_TYPES['en'];
+        return types[Math.floor(Math.random() * types.length)];
     }
 
     getRandomTimeOfDay() {
-        const totalWeight = TIME_PERIODS.reduce((sum, t) => sum + t.weight, 0);
+        const periods = TIME_PERIODS[this.lang] || TIME_PERIODS['en'];
+        const totalWeight = periods.reduce((sum, t) => sum + t.weight, 0);
         let random = Math.random() * totalWeight;
 
-        for (const period of TIME_PERIODS) {
+        for (const period of periods) {
             random -= period.weight;
             if (random <= 0) {
                 return period.name;
             }
         }
 
-        return TIME_PERIODS[TIME_PERIODS.length - 1].name;
+        return periods[periods.length - 1].name;
     }
 
     formatDate(date) {
-        return date.toLocaleDateString('de-DE', {
+        const locale = this.lang === 'de' ? 'de-DE' : 'en-US';
+        return date.toLocaleDateString(locale, {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
@@ -78,7 +104,8 @@ class ScenarioService {
      * @returns {String}
      */
     formatForClipboard(scenario) {
-        return `🎲 TSW5 Szenario
+        const title = this.lang === 'de' ? '🎲 TSW5 Szenario' : '🎲 TSW5 Scenario';
+        return `${title}
 -----------------------
 📅 ${scenario.formattedDate}
 🌦️ ${scenario.weather.name} ${scenario.weather.emoji}
