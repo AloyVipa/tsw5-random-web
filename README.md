@@ -14,7 +14,7 @@ Eine Web-App zur Generierung zufälliger Szenarien für Train Sim World 5.
 
 ### Online
 Die App ist auf GitHub Pages verfügbar:
-https://mcblatt.github.io/TSW5-Random-Weather-Scenario/
+https://aloyvipa.github.io/tsw5-random-web/
 
 ### Lokal
 1. Repository klonen oder herunterladen
@@ -120,8 +120,15 @@ ts5-web/
 
 ## 📝 Lizenz
 
-MIT License - siehe [LICENSE](../LICENSE)
+MIT License - siehe [LICENSE](LICENSE)
 
 ## 🙏 Credits
 
-Basierend auf der originalen Python/Tkinter App von MCBlatt.
+Basierend auf der originalen Python/Tkinter App von [MCBlatt](https://github.com/MCBlatt).
+
+## 💬 Feedback
+
+Hast du einen Bug gefunden oder eine Idee für eine neue Funktion?
+
+- 🐛 [Bug melden](https://github.com/AloyVipa/tsw5-random-web/issues/new?template=bug_report.md)
+- 💡 [Idee vorschlagen](https://github.com/AloyVipa/tsw5-random-web/issues/new?template=feature_request.md)
